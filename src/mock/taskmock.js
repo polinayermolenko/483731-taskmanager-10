@@ -64,8 +64,8 @@ const generateTask = () => {
     repeatingDays: dueDate ? DefaultRepeatingDays : generateRepeatingDays(),
     tags: new Set(generateTags(Tags)),
     color: getRandomArrayItem(Colors),
-    isFavorite: Math.random > 0.5,
-    isArchive: Math.random > 0.5
+    isFavorite: Math.random() > 0.5,
+    isArchive: Math.random() > 0.5
   };
 };
 
