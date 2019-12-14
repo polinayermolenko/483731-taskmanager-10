@@ -10,7 +10,8 @@ const countOverdueTasks = (tasks) => {
 
 const countTodayTasks = (tasks) => {
   const todayTasksNumber = tasks.filter((task) => {
-    const isToday = task.dueDate === Date.now();
+    const today = new Date();
+    const isToday = task.dueDate instanceof Date && task.dueDate.getDate() === today.getDate();
     return isToday;
   });
   return todayTasksNumber.length;
@@ -24,20 +25,29 @@ const countFavoriteTasks = (tasks) => {
   return favoriteTasksNumber.length;
 };
 
-/* const countRepeatingTasks = (tasks) => {
-  const repeatingTasksNumber = tasks.some((task) => {
-    const repeatingFlags = new Array();
-    for (let value of task.repeatingDays) {
-     repeatingFlags.push(value);
+const countRepeatingTasks = (tasks) => {
+  const repeatingTasksNumber = tasks.filter((task) => {
+
+    let isRepeating = false;
+    for (let day in task.repeatingDays) {
+      if (!task.repeatingDays.hasOwnProperty(day)) {
+        continue;
+      }
+
+      if (task.repeatingDays[day]) {
+        isRepeating = true;
+        break;
+      }
     }
-    return repeatingFlags.indexOf(true);
+    return isRepeating;
+
   });
   return repeatingTasksNumber.length;
-}; */
+};
 
 const countTagsTasks = (tasks) => {
   const tagsTasksNumber = tasks.filter((task) => {
-    return task.tags.length;
+    return task.tags.size > 0;
   });
   return tagsTasksNumber.length;
 };
@@ -57,7 +67,7 @@ const generateFilters = (tasks) => {
     'overdue': countOverdueTasks(tasks),
     'today': countTodayTasks(tasks),
     'favorites': countFavoriteTasks(tasks),
-    /* 'repeating': countRepeatingTasks(tasks) */
+    'repeating': countRepeatingTasks(tasks),
     'tags': countTagsTasks(tasks),
     'archive': countArchiveTasks(tasks)
   };
