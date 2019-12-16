@@ -11,7 +11,9 @@ const countOverdueTasks = (tasks) => {
 const countTodayTasks = (tasks) => {
   const todayTasksNumber = tasks.filter((task) => {
     const today = new Date();
-    const isToday = task.dueDate instanceof Date && task.dueDate.getDate() === today.getDate();
+    const isToday = task.dueDate instanceof Date && (task.dueDate.getDate() === today.getDate() &&
+      task.dueDate.getMonth() === today.getMonth() &&
+      task.dueDate.getFullYear() === today.getFullYear());
     return isToday;
   });
   return todayTasksNumber.length;
