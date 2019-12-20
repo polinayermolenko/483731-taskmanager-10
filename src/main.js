@@ -9,19 +9,35 @@ import {generateFilters} from './mock/filter.js';
 import {render, RenderPosition} from './util.js';
 
 const renderTask = (task) => {
+
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
+      replaceEditToTask();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
   const taskComponent = new TaskComponent(task);
   const taskEditComponent = new TaskEditComponent(task);
 
   const editButton = taskComponent.getElement().querySelector(`.card__btn--edit`);
   const editForm = taskEditComponent.getElement().querySelector(`form`);
 
-  editButton.addEventListener(`click`, () => {
+  const replaceEditToTask = () => {
+    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+  };
+
+  const replaceTaskToEdit = () => {
     taskListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+  };
+
+  editButton.addEventListener(`click`, () => {
+    replaceTaskToEdit();
+    document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  editForm.addEventListener(`submit`, () => {
-    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
-  });
+  editForm.addEventListener(`submit`, replaceEditToTask);
 
   render(taskListElement, taskComponent.getElement(), RenderPosition.BEFOREEND);
 };
