@@ -5,6 +5,7 @@ import TaskEditComponent from './components/task-edit.js';
 import TaskComponent from './components/task.js';
 import SiteMenuComponent from './components/site-menu.js';
 import SortComponent from './components/sort.js';
+import TasksComponent from './components/tasks.js';
 import {generateTasks} from './mock/taskmock.js';
 import {generateFilters} from './mock/filter.js';
 import {render, RenderPosition} from './util.js';
