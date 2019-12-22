@@ -21,6 +21,12 @@ const renderTask = (taskListElement, task) => {
       document.removeEventListener(`keydown`, onEscKeyDown);
     }
   };
+
+  const onSubmitForm = () => {
+    replaceEditToTask();
+    document.removeEventListener(`keydown`, onEscKeyDown);
+  };
+
   const taskComponent = new TaskComponent(task);
   const taskEditComponent = new TaskEditComponent(task);
 
@@ -40,7 +46,7 @@ const renderTask = (taskListElement, task) => {
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  editForm.addEventListener(`submit`, replaceEditToTask);
+  editForm.addEventListener(`submit`, onSubmitForm);
 
   render(taskListElement, taskComponent.getElement(), RenderPosition.BEFOREEND);
 };
