@@ -11,43 +11,6 @@ import {generateTasks} from './mock/taskmock.js';
 import {generateFilters} from './mock/filter.js';
 import {render, RenderPosition, remove, replace} from './utils/render.js';
 
-const renderTask = (taskListElement, task) => {
-
-  const onEscKeyDown = (evt) => {
-    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
-
-    if (isEscKey) {
-      replaceEditToTask();
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    }
-  };
-
-  const onSubmitForm = () => {
-    replaceEditToTask();
-    document.removeEventListener(`keydown`, onEscKeyDown);
-  };
-
-  const taskComponent = new TaskComponent(task);
-  const taskEditComponent = new TaskEditComponent(task);
-
-  const replaceEditToTask = () => {
-    replace(taskComponent, taskEditComponent);
-  };
-
-  const replaceTaskToEdit = () => {
-    replace(taskEditComponent, taskComponent);
-  };
-
-  taskComponent.setEditButtonClickHandler(() => {
-    replaceTaskToEdit();
-    document.addEventListener(`keydown`, onEscKeyDown);
-  });
-
-  taskEditComponent.setSubmitHandler(onSubmitForm);
-
-  render(taskListElement, taskComponent.getElement(), RenderPosition.BEFOREEND);
-};
-
 const TASK_COUNT = 22;
 const SHOWING_TASKS_COUNT_ON_START = 8;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
