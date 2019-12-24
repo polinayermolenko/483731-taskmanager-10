@@ -1,5 +1,5 @@
 import AbstractComponent from './abstract-component.js';
-import {formatTime} from '../util.js';
+import {formatTime} from '../utils/common.js';
 import {MonthNames} from '../const.js';
 
 

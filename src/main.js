@@ -9,7 +9,7 @@ import TasksComponent from './components/tasks.js';
 import NoTasksComponent from './components/no-tasks.js';
 import {generateTasks} from './mock/taskmock.js';
 import {generateFilters} from './mock/filter.js';
-import {render, RenderPosition} from './util.js';
+import {render, RenderPosition, remove, replace} from './utils/render.js';
 
 const renderTask = (taskListElement, task) => {
 
@@ -34,11 +34,11 @@ const renderTask = (taskListElement, task) => {
   const editForm = taskEditComponent.getElement().querySelector(`form`);
 
   const replaceEditToTask = () => {
-    taskListElement.replaceChild(taskComponent.getElement(), taskEditComponent.getElement());
+    replace(taskComponent, taskEditComponent);
   };
 
   const replaceTaskToEdit = () => {
-    taskListElement.replaceChild(taskEditComponent.getElement(), taskComponent.getElement());
+    replace(taskEditComponent, taskComponent);
   };
 
   editButton.addEventListener(`click`, () => {
@@ -94,8 +94,7 @@ if (isAllTasksArchived) {
       .forEach((task) => renderTask(taskListElement, task));
 
     if (showingTasksCount >= tasks.length) {
-      loadMoreButtonComponent.getElement().remove();
-      loadMoreButtonComponent.removeElement();
+      remove(loadMoreButtonComponent);
     }
   });
 }

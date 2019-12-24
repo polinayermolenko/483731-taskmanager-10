@@ -1,6 +1,6 @@
 import AbstractComponent from './abstract-component.js';
 import {Colors, Days, MonthNames} from '../const.js';
-import {formatTime} from '../util.js';
+import {formatTime} from '../utils/common.js';
 
 const createRepeatingDaysMarkup = (days, repeatingDays) => {
   return days
