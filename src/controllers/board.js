@@ -56,7 +56,7 @@ export default class BoardController {
     this._loadMoreButtonComponent = new LoadMoreButtonComponent();
   }
 
-  renderBoard(tasks) {
+  render(tasks) {
     const container = this._container.getElement();
     const isAllTasksArchived = tasks.every((task) => task.isArchive);
 
