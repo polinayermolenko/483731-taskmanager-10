@@ -46,6 +46,12 @@ const renderTask = (taskListElement, task) => {
   render(taskListElement, taskComponent, RenderPosition.BEFOREEND);
 };
 
+const renderTasks = (taskListElement, tasks) => {
+  tasks.forEach((task) => {
+    renderTask(taskListElement, task);
+  });
+};
+
 export default class BoardController {
   constructor(container) {
     this._container = container;
@@ -69,9 +75,7 @@ export default class BoardController {
       const taskListElement = this._tasksComponent.getElement();
 
       let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
-      tasks.slice(0, showingTasksCount)
-     .forEach((task) =>
-       renderTask(taskListElement, task));
+      renderTasks(taskListElement, tasks.slice(0, showingTasksCount));
 
       render(container, this._loadMoreButtonComponent, RenderPosition.BEFOREEND);
 
