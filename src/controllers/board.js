@@ -16,13 +16,12 @@ const renderTask = (taskListElement, task) => {
 
     if (isEscKey) {
       replaceEditToTask();
-      document.removeEventListener(`keydown`, onEscKeyDown);
     }
   };
 
   const onSubmitForm = () => {
     replaceEditToTask();
-    document.removeEventListener(`keydown`, onEscKeyDown);
+
   };
 
   const taskComponent = new TaskComponent(task);
@@ -30,15 +29,16 @@ const renderTask = (taskListElement, task) => {
 
   const replaceEditToTask = () => {
     replace(taskComponent, taskEditComponent);
+    document.removeEventListener(`keydown`, onEscKeyDown);
   };
 
   const replaceTaskToEdit = () => {
     replace(taskEditComponent, taskComponent);
+    document.addEventListener(`keydown`, onEscKeyDown);
   };
 
   taskComponent.setEditButtonClickHandler(() => {
     replaceTaskToEdit();
-    document.addEventListener(`keydown`, onEscKeyDown);
   });
 
   taskEditComponent.setSubmitHandler(onSubmitForm);
@@ -83,6 +83,17 @@ export default class BoardController {
 
     };
 
+    const rerenderTasks = (tasks) => {
+      taskListElement.innerHTML = ``;
+
+      showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
+      renderTasks(taskListElement, tasks.slice(0, showingTasksCount));
+      if (this._loadMoreButtonComponent) {
+        remove(this._loadMoreButtonComponent);
+      }
+      renderLoadMoreButton(tasks);
+    };
+
     const container = this._container.getElement();
     const isAllTasksArchived = initialTasks.every((task) => task.isArchive);
 
@@ -97,12 +108,11 @@ export default class BoardController {
     const taskListElement = this._tasksComponent.getElement();
 
     let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
-    renderTasks(taskListElement, initialTasks.slice(0, showingTasksCount));
-    renderLoadMoreButton(initialTasks);
+    rerenderTasks(initialTasks);
 
     this._sortComponent.setSortTypeChangeHandler((sortType) => {
       let sortedTasks = [];
-      showingTasksCount = 8;
+      showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
       switch (sortType) {
         case SortType.DATE_UP:
@@ -116,11 +126,7 @@ export default class BoardController {
           break;
       }
 
-      taskListElement.innerHTML = ``;
-
-      renderTasks(taskListElement, sortedTasks.slice(0, showingTasksCount));
-      remove(this._loadMoreButtonComponent);
-      renderLoadMoreButton(sortedTasks);
+      rerenderTasks(sortedTasks);
     });
   }
 }
