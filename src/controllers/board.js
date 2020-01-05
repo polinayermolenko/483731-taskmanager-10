@@ -33,8 +33,8 @@ export default class BoardController {
     this._sortComponent.setSortTypeChangeHandler(this._onSortTypeChange);
   }
 
-  render(/*initialTasks*/tasks) {
-    /*const renderLoadMoreButton = (tasks) => {
+  render(/* initialTasks*/tasks) {
+    /* const renderLoadMoreButton = (tasks) => {
       if (showingTasksCount >= tasks.length) {
         return;
       }
@@ -52,10 +52,10 @@ export default class BoardController {
         }
       });
 
-    };*/
+    }; */
     this._tasks = tasks;
 
-    /*const rerenderTasks = (tasks) => {
+    /* const rerenderTasks = (tasks) => {
       taskListElement.innerHTML = ``;
 
       showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
@@ -64,10 +64,10 @@ export default class BoardController {
         remove(this._loadMoreButtonComponent);
       }
       renderLoadMoreButton(tasks);
-    };*/
+    }; */
 
     const container = this._container.getElement();
-    const isAllTasksArchived = /*initialTasks*/this._tasks.every((task) => task.isArchive);
+    const isAllTasksArchived = /* initialTasks*/this._tasks.every((task) => task.isArchive);
 
     if (isAllTasksArchived) {
       render(container, this._noTaskComponent, RenderPosition.BEFOREEND);
@@ -79,12 +79,12 @@ export default class BoardController {
 
     const taskListElement = this._tasksComponent.getElement();
 
-    /*let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;*/
-    /*rerenderTasks(initialTasks);*/
+    /* let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;*/
+    /* rerenderTasks(initialTasks);*/
     const newTasks = renderTasks(taskListElement, this._tasks.slice(0, this._showingTaskCount), this._onDataChange, this._onViewChange);
     this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
     this._renderLoadMoreButton();
-    /*this._sortComponent.setSortTypeChangeHandler((sortType) => {
+    /* this._sortComponent.setSortTypeChangeHandler((sortType) => {
       let sortedTasks = [];
       showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
 
@@ -116,7 +116,7 @@ export default class BoardController {
     this._loadMoreButtonComponent.setClickHandler(() => {
       const prevTasksCount = this._showingTaskCount;
       const taskListElement = this._tasksComponent.getElement();
-      this._showingTasksCount = this._showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
+      this._showingTaskCount = this._showingTaskCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
       const newTasks = renderTasks(taskListElement, this._tasks.slice(prevTasksCount, this._showingTaskCount), this._onDataChange, this._onViewChange);
       this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);

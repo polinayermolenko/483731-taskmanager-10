@@ -77,20 +77,20 @@ const createTaskEditTemplate = (task, options = {}) => {
 
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
-  //const isDateShowing = !!dueDate;
+  // const isDateShowing = !!dueDate;
   const isBlockSaveButton = (isDateShowing && isRepeatingTask) ||
     (isRepeatingTask && !isRepeating(activeRepeatingDays));
 
-  //const date = isDateShowing ? `${dueDate.getDate()} ${MonthNames[dueDate.getMonth()]}` : ``;
-  //const time = isDateShowing ? formatTime(dueDate) : ``;
+  // const date = isDateShowing ? `${dueDate.getDate()} ${MonthNames[dueDate.getMonth()]}` : ``;
+  // const time = isDateShowing ? formatTime(dueDate) : ``;
   const date = (isDateShowing && dueDate) ? formatDate(dueDate) : ``;
   const time = (isDateShowing && dueDate) ? formatTime(dueDate) : ``;
 
-  //const isRepeatingTask = Object.values(repeatingDays).some(Boolean);
+  // const isRepeatingTask = Object.values(repeatingDays).some(Boolean);
   const repeatClass = isRepeatingTask ? `card--repeat` : ``;
   const deadlineClass = isExpired ? `card--dealine` : ``;
 
-  //const repeatingDaysMarkup = createRepeatingDaysMarkup(Days, repeatingDays);
+  // const repeatingDaysMarkup = createRepeatingDaysMarkup(Days, repeatingDays);
   const repeatingDaysMarkup = createRepeatingDaysMarkup(Days, activeRepeatingDays);
   const colorsMarkup = createColorsMarkup(Colors, color);
   const hashtagsMarkup = createHashtags(tags);

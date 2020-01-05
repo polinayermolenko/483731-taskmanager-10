@@ -25,7 +25,7 @@ export default class TaskController {
     const oldTaskComponent = this._taskComponent;
     const oldTaskEditComponent = this._taskEditComponent;
 
-    this._taskEditComponent = new TaskComponent(task);
+    this._taskComponent = new TaskComponent(task);
     this._taskEditComponent = new TaskEditComponent(task);
 
     this._taskComponent.setEditButtonClickHandler(() => {
@@ -51,12 +51,12 @@ export default class TaskController {
       replace(this._taskComponent, oldTaskComponent);
       replace(this._taskEditComponent, oldTaskEditComponent);
     } else {
-      render(this._container, this._taskComponent, RenderPosition.BEFOREND);
+      render(this._container, this._taskComponent, RenderPosition.BEFOREEND);
     }
   }
 
   setDefaultView() {
-    if (this.mode !== Mode.DEFAULT) {
+    if (this._mode !== Mode.DEFAULT) {
       this._replaceEditToTask();
     }
   }
