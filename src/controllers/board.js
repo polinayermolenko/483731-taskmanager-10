@@ -8,13 +8,13 @@ import {render, RenderPosition, remove} from '../utils/render.js';
 const SHOWING_TASKS_COUNT_ON_START = 8;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
 
-const renderTasks = (taskListElement, tasks, onDataChange, onViewChange) => {
+/*const renderTasks = (taskListElement, tasks, onDataChange, onViewChange) => {
   return tasks.map((task) => {
     const taskController = new TaskController(taskListElement, onDataChange, onViewChange);
     taskController.render(task);
     return taskController;
   });
-};
+};*/
 
 export default class BoardController {
   constructor(container) {
@@ -79,30 +79,17 @@ export default class BoardController {
 
     const taskListElement = this._tasksComponent.getElement();
 
-    /* let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;*/
-    /* rerenderTasks(initialTasks);*/
-    const newTasks = renderTasks(taskListElement, this._tasks.slice(0, this._showingTaskCount), this._onDataChange, this._onViewChange);
+    const newTasks = this._renderTasks(taskListElement, this._tasks.slice(0, this._showingTaskCount));
     this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
     this._renderLoadMoreButton();
-    /* this._sortComponent.setSortTypeChangeHandler((sortType) => {
-      let sortedTasks = [];
-      showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
+  }
 
-      switch (sortType) {
-        case SortType.DATE_UP:
-          sortedTasks = initialTasks.slice().sort((a, b) => a.dueDate - b.dueDate);
-          break;
-        case SortType.DATE_DOWN:
-          sortedTasks = initialTasks.slice().sort((a, b) => b.dueDate - a.dueDate);
-          break;
-        case SortType.DEFAULT:
-          sortedTasks = initialTasks;
-          break;
-      }
-
-      rerenderTasks(sortedTasks);
-    });
-    */
+  _renderTasks(taskListElement, tasks) {
+    return tasks.map((task) => {
+    const taskController = new TaskController(taskListElement, this._onDataChange, this._onViewChange);
+    taskController.render(task);
+    return taskController;
+  });
   }
 
   _renderLoadMoreButton() {
@@ -118,7 +105,7 @@ export default class BoardController {
       const taskListElement = this._tasksComponent.getElement();
       this._showingTaskCount = this._showingTaskCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
-      const newTasks = renderTasks(taskListElement, this._tasks.slice(prevTasksCount, this._showingTaskCount), this._onDataChange, this._onViewChange);
+      const newTasks = this._renderTasks(taskListElement, this._tasks.slice(prevTasksCount, this._showingTaskCount));
       this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
 
       if (this._showingTaskCount >= this._tasks.length) {
@@ -162,7 +149,7 @@ export default class BoardController {
 
     taskListElement.innerHTML = ``;
 
-    const newTasks = renderTasks(taskListElement, sortedTasks, this._onDataChange, this._onViewChange);
+    const newTasks = this._renderTasks(taskListElement, sortedTasks);
     this._showedTaskControllers = newTasks;
 
     if (sortType === SortType.DEFAULT) {
