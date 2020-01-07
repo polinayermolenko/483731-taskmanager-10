@@ -7,3 +7,7 @@ export const formatTime = (date) => {
 export const formatDate = (date) => {
   return moment(date).format(`DD MMMM`);
 };
+
+export const isRepeating = (repeatingDays) => {
+  return Object.values(repeatingDays).some(Boolean);
+};
