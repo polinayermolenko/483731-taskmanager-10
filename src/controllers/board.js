@@ -81,7 +81,7 @@ export default class BoardController {
 
     const newTasks = this._renderTasks(taskListElement, this._tasks.slice(0, this._showingTaskCount));
     this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
-    this._renderLoadMoreButton();
+    this._renderLoadMoreButton(this._tasks);
   }
 
   _renderTasks(taskListElement, tasks) {
@@ -92,8 +92,8 @@ export default class BoardController {
   });
   }
 
-  _renderLoadMoreButton() {
-    if (this._showingTaskCount >= this._tasks.length) {
+  _renderLoadMoreButton(tasks) {
+    if (this._showingTaskCount >= tasks.length) {
       return;
     }
 
@@ -105,10 +105,10 @@ export default class BoardController {
       const taskListElement = this._tasksComponent.getElement();
       this._showingTaskCount = this._showingTaskCount + SHOWING_TASKS_COUNT_BY_BUTTON;
 
-      const newTasks = this._renderTasks(taskListElement, this._tasks.slice(prevTasksCount, this._showingTaskCount));
+      const newTasks = this._renderTasks(taskListElement, tasks.slice(prevTasksCount, this._showingTaskCount));
       this._showedTaskControllers = this._showedTaskControllers.concat(newTasks);
 
-      if (this._showingTaskCount >= this._tasks.length) {
+      if (this._showingTaskCount >= tasks.length) {
         remove(this._loadMoreButtonComponent);
       }
     });
@@ -141,7 +141,7 @@ export default class BoardController {
         sortedTasks = this._tasks.slice().sort((a, b) => b.dueDate - a.dueDate);
         break;
       case SortType.DEFAULT:
-        sortedTasks = this._tasks.slice(0, this._showingTasksCount);
+        sortedTasks = this._tasks;/*.slice(0, this._showingTasksCount);*/
         break;
     }
 
@@ -149,14 +149,13 @@ export default class BoardController {
 
     taskListElement.innerHTML = ``;
 
-    const newTasks = this._renderTasks(taskListElement, sortedTasks);
-    this._showedTaskControllers = newTasks;
+    this._showingTaskCount = SHOWING_TASKS_COUNT_ON_START;
+    const newTasks = this._renderTasks(taskListElement, sortedTasks.slice(0, this._showingTaskCount))
 
-    if (sortType === SortType.DEFAULT) {
-      this._renderLoadMoreButton();
-    } else {
-      remove(this._loadMoreButtonComponent);
+    if (this._loadMoreButtonComponent.element) {
+      remove(this._loadMoreButtonComponent)
     }
+    this._renderLoadMoreButton(sortedTasks);
   }
 
 }
