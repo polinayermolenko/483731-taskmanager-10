@@ -121,7 +121,7 @@ const createTaskEditTemplate = (task, options = {}) => {
                             type="text"
                             placeholder=""
                             name="date"
-                            value="${date} ${time}"
+                            value="${date}${time}"
                           />
                         </label>
                       </fieldset>` : ``}
