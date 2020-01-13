@@ -121,7 +121,7 @@ const createTaskEditTemplate = (task, options = {}) => {
                             type="text"
                             placeholder=""
                             name="date"
-                            value="${date}${time}"
+                            value=""
                           />
                         </label>
                       </fieldset>` : ``}
@@ -240,6 +240,7 @@ export default class TaskEdit extends AbstractSmartComponent {
         altInput: true,
         allowInput: true,
         defaultDate: this._task.dueDate,
+        enableTime: true
       });
     }
   }
