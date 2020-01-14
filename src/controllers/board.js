@@ -57,7 +57,7 @@ export default class BoardController {
 
   _renderSortedTasks(tasks) {
     const taskListElement = this._tasksComponent.getElement();
-
+    this._showedTaskControllers.map((it) => it.setDefaultView());
     taskListElement.innerHTML = ``;
 
     this._showingTaskCount = SHOWING_TASKS_COUNT_ON_START;

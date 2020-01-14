@@ -1,6 +1,6 @@
 import AbstractSmartComponent from './abstract-smart-component.js';
 import {Colors, Days} from '../const.js';
-import {formatTime, formatDate, isRepeating} from '../utils/common.js';
+import {isRepeating} from '../utils/common.js';
 import flatpickr from 'flatpickr';
 
 const createRepeatingDaysMarkup = (days, repeatingDays) => {
@@ -76,9 +76,6 @@ const createTaskEditTemplate = (task, options = {}) => {
   const isBlockSaveButton = (isDateShowing && isRepeatingTask) ||
     (isRepeatingTask && !isRepeating(activeRepeatingDays));
 
-  const date = (isDateShowing && dueDate) ? formatDate(dueDate) : ``;
-  const time = (isDateShowing && dueDate) ? formatTime(dueDate) : ``;
-
   const repeatClass = isRepeatingTask ? `card--repeat` : ``;
   const deadlineClass = isExpired ? `card--dealine` : ``;
 
@@ -121,7 +118,7 @@ const createTaskEditTemplate = (task, options = {}) => {
                             type="text"
                             placeholder=""
                             name="date"
-                            value="${date} ${time}"
+                            value=""
                           />
                         </label>
                       </fieldset>` : ``}
@@ -240,6 +237,7 @@ export default class TaskEdit extends AbstractSmartComponent {
         altInput: true,
         allowInput: true,
         defaultDate: this._task.dueDate,
+        enableTime: true
       });
     }
   }
